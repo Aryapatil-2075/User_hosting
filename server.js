@@ -3,17 +3,17 @@ require("dotenv").config();
 const userRouter = require("./Routes/user");
 // const { authUser, checkAuthorization } = require("./Utils/userAuth");
 const app = express();
-const cors = require("cors")
-const port = process.env.PORT
+const cors = require("cors");
+const port = process.env.PORT;
 
-app.use(cors())
+app.use(cors());
 app.use(express.json());
-app.use("/user",userRouter);
+app.use("/user", userRouter);
 
-app.use("/",()=>{
-  console.log("Server Started....")
-})
+app.get("/", (req, res) => {
+  res.send("server started on public domain");
+});
 
-app.listen(port,() => {
+app.listen(port, () => {
   console.log(`Server is running on ${port}`);
 });

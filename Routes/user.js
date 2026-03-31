@@ -9,10 +9,6 @@ const { authUser, checkAuthorization } = require("../Utils/userAuth");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("server started........................");
-});
-
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
   const hashedPassword = cryptojs.SHA256(password).toString();
