@@ -5,9 +5,13 @@ const jwt = require("jsonwebtoken");
 const pool = require("../Database/db");
 const result = require("../Utils/result");
 const config = require("../Utils/config");
-const { authUser,checkAuthorization } = require("../Utils/userAuth");
+const { authUser, checkAuthorization } = require("../Utils/userAuth");
 
 const router = express.Router();
+
+router.get("/", (req, res) => {
+  res.send("server started........................");
+});
 
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
@@ -23,9 +27,9 @@ router.post("/signin", (req, res) => {
       // create the JWT token
       // inside the payload store the data that needs to be encryted into the token
       const payload = {
-        email: user.email
+        email: user.email,
       };
-      console.log(payload)
+      console.log(payload);
       const token = jwt.sign(payload, config.SECRET);
       const userData = {
         name: user.name,
@@ -37,37 +41,37 @@ router.post("/signin", (req, res) => {
   });
 });
 
-router.post("/signup",(req,res) => {
-    const {name,email,password,mobileNo} = req.body
-    let hashedPassword = cryptojs.SHA256(password).toString()
-    let sql = "Insert into users(name,email,password,mobile) values(?,?,?,?)"
-    pool.query(sql,[name,email,hashedPassword,mobileNo],(error,data) => {
-        res.send(result.createResult(error,data))
-    })
-})
+router.post("/signup", (req, res) => {
+  const { name, email, password, mobileNo } = req.body;
+  let hashedPassword = cryptojs.SHA256(password).toString();
+  let sql = "Insert into users(name,email,password,mobile) values(?,?,?,?)";
+  pool.query(sql, [name, email, hashedPassword, mobileNo], (error, data) => {
+    res.send(result.createResult(error, data));
+  });
+});
 
-router.get("/getprofile",authUser,(req,res) => {
-  const email = req.user
-  const sql = "Select name,email,mobile from users where email = ?"
-  pool.query(sql,[email],(error,data) => {
-    res.send(result.createResult(error,data))
-  })
-})
+router.get("/getprofile", authUser, (req, res) => {
+  const email = req.user;
+  const sql = "Select name,email,mobile from users where email = ?";
+  pool.query(sql, [email], (error, data) => {
+    res.send(result.createResult(error, data));
+  });
+});
 
-router.put("/updateprofile",authUser,(req,res) => {
-  const email = req.user
-  const {name,mobileNo} = req.body
-  const sql = "Update users SET name = ? , mobile = ? where email = ?"
-  pool.query(sql,[name,mobileNo,email],(error,data) => {
-    res.send(result.createResult(error,data))
-  })
-})
+router.put("/updateprofile", authUser, (req, res) => {
+  const email = req.user;
+  const { name, mobileNo } = req.body;
+  const sql = "Update users SET name = ? , mobile = ? where email = ?";
+  pool.query(sql, [name, mobileNo, email], (error, data) => {
+    res.send(result.createResult(error, data));
+  });
+});
 
-router.get("/stationery",(req,res) => {
-  const sql = `Select * from items`
-  pool.query(sql,(error,data) => {
-    res.send(result.createResult(error,data))
-  })
-})
+router.get("/stationery", (req, res) => {
+  const sql = `Select * from items`;
+  pool.query(sql, (error, data) => {
+    res.send(result.createResult(error, data));
+  });
+});
 
 module.exports = router;
