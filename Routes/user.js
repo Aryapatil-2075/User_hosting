@@ -9,6 +9,8 @@ const { authUser, checkAuthorization } = require("../Utils/userAuth");
 
 const router = express.Router();
 
+console.log("user api is called");
+
 router.post("/signin", (req, res) => {
   const { email, password } = req.body;
   const hashedPassword = cryptojs.SHA256(password).toString();
