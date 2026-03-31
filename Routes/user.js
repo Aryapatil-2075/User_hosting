@@ -21,6 +21,7 @@ router.post("/signin", (req, res) => {
       res.send(result.createResult("Invalid email or password"));
     else {
       const user = data[0];
+      console.log(user);
 
       // create the JWT token
       // inside the payload store the data that needs to be encryted into the token
