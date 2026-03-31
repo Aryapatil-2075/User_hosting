@@ -6,7 +6,7 @@ const app = express();
 const cors = require("cors");
 const port = process.env.PORT;
 
-app.use(cors({ origin: "https://sprightly-syrniki-9d2c1f.netlify.app/" }));
+app.use(cors({ origin: "https://sprightly-syrniki-9d2c1f.netlify.app" }));
 app.use(express.json());
 app.use("/user", userRouter);
 
