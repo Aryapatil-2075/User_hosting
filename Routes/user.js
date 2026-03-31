@@ -11,7 +11,7 @@ const router = express.Router();
 
 console.log("user api is called");
 
-router.post("/signin", (req, res) => {
+router.post("/sign-in", (req, res) => {
   const { email, password } = req.body;
   const hashedPassword = cryptojs.SHA256(password).toString();
   const sql = `SELECT * FROM users WHERE email = ? AND password = ?`;
